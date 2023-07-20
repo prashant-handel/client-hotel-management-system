@@ -1,7 +1,8 @@
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import SelectRooms from "../components/Modal";
+import { RoomContext } from "../App";
 
 const BookingForm = () => {
   const [modalShow, setModalShow] = useState(false);
@@ -12,8 +13,13 @@ const BookingForm = () => {
     checkIn: "25/07/2023",
     checkOut: "30/07/2023",
     roomNo: [],
-    price: 1000,
+    price: 0,
   });
+
+  let [sum,setSum]= useState(0);
+
+  const roomsData = useContext(RoomContext);
+  const { totalRooms } = roomsData;
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -30,11 +36,28 @@ const BookingForm = () => {
 
   const onSubmitModal = (newRooms) => {
     console.log(newRooms);
-    for (const key in newRooms) {
-      setNewOrder((prev) => {
-        return { ...prev, roomNo: key};
-      });
-    }
+    setNewOrder((prev) => {
+      return {
+        ...prev,
+        roomNo: [...newRooms],
+      };
+    });
+
+    setNewOrder((prev) => {
+      return {
+        ...prev,
+        price: prev.roomNo.map((num) => {
+          for (const key in totalRooms) {
+            if(totalRooms[key].roomNo === num){
+              // console.log(`price = ${totalRooms[key].price}`);
+              // setSum(sum+totalRooms[key].price)
+              // console.log(sum);
+            }
+          }
+        }),
+      };
+    });
+
     setModalShow(false);
   };
 
@@ -68,7 +91,7 @@ const BookingForm = () => {
         />
       </Form.Group>
       <Form.Group className="mb-2">
-        <h4>{`Total Price: Rs.${1000}`}</h4>
+        <h4>{`Total Price: Rs.${newOrder.price}`}</h4>
       </Form.Group>
       <Form.Group className="mb-2">
         <Button variant="danger" onClick={() => setModalShow(true)}>
