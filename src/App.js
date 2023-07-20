@@ -18,7 +18,7 @@ function App() {
       .get("http://localhost:5000/rooms")
       .then((response) => {
         setRoomsData(response.data.data);
-        console.log(response.data.data.ACData[0].availAC);
+        // console.log(response.data.data);
       });
   };
 

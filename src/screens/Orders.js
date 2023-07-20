@@ -8,7 +8,7 @@ const Orders = () => {
   const fetchOrdersData = () => {
     axios.get("http://localhost:5000/orders").then((response) => {
       setOrdersData(response.data.data.ordersData);
-      console.log(response.data.data.ordersData);
+      // console.log(response.data.data.ordersData);
     });
   };
 

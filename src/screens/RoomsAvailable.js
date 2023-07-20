@@ -6,6 +6,7 @@ import { RoomContext } from "../App";
 
 const RoomsAvailable = () => {
   const roomsData = useContext(RoomContext);
+  const {availAC, availNAC } = roomsData;
   return (
     <div>
     <div>
@@ -18,13 +19,13 @@ const RoomsAvailable = () => {
             <Card.Title>
               Total AC Rooms Available:{" "}
               <span className="float-end fw-bold">
-                {roomsData.ACData[0].availAC}
+                {availAC[0].values.length}
               </span>
             </Card.Title>
             <Card.Title>
               Total Non AC Rooms Available:{" "}
               <span className="float-end fw-bold">
-                {roomsData.NACData[0].availNAC}
+                {availNAC[0].values.length}
               </span>
             </Card.Title>
           </Card.Body>
